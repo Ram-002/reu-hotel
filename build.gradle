@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    }
+    dependencies {
+        classpath 'com.hendraanggrian:packr-gradle-plugin:0.2'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.hendraanggrian.packr'
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+run {
+    mainClassName = 'Main'
+}
+
+dependencies {
+    compile 'org.openjfx:javafx-swing:15'
+    compile 'org.postgresql:postgresql:42.2.18'
+    compile 'com.intellij:forms_rt:7.0.3'
+
+    compile 'org.jooq:jooq:3.14.4'
+    compile 'org.jooq:jooq-meta:3.14.4'
+    compile 'org.jooq:jooq-codegen:3.14.4'
+}
+
+packr {
+    executable = project.name
+    mainClass = "Main"
+    classpath = files("build/install/Hotel/lib")
+    minimizeJre = 'soft'
+    outputDirectory = 'build/releases'
+
+    configureWindows32 {
+        name = project.name
+        jdk = "C:\\Users\\Ramil Khamitov\\Projects\\Hotel\\OpenJDK.zip"
+    }
+}
